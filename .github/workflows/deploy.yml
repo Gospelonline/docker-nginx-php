@@ -1,4 +1,4 @@
-name: Docker Build
+name: CI Pipeline
 
 on:
   push:
@@ -6,22 +6,39 @@ on:
       - main
 
 jobs:
-  build:
+
+  validate:
+
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
 
-      - name: Baixar projeto
-        uses: actions/checkout@v4
-
-      - name: Mostrar Docker
-        run: docker --version
-
-      - name: Mostrar Docker Compose
-        run: docker compose version
-
-      - name: Validar docker-compose.yml
+      - name: Validar Compose
         run: docker compose config
 
-      - name: Construir containers
+  build:
+
+    needs: validate
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
         run: docker compose build
+
+  info:
+
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Informações
+        run: |
+          echo "Workflow concluído com sucesso!"
+          echo "Runner: $RUNNER_OS"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
