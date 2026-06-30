@@ -1,0 +1,89 @@
+Para abrir o powershell no MS-Dos: powershell
+--------------------------------------------------
+Caso o Powershell não funcione no Windows 10 precisa atualizar o App Installer:
+https://www.microsoft.com/store/productId/9NBLGGH4NNS1
+--------------------------------------------------
+Para listar programas instalados:
+winget list
+
+Para atualizar apenas 1 programa:
+winget upgrade --name "Nome do Programa"
+ou
+winget upgrade --id nome-do-pacote
+--------------------------------------------------
+Atualizando todos os programas automaticamente:
+winget update --all
+
+Comando PowerShell para atualizar todos os programas com Winget:
+winget upgrade --all --accept-source-agreements --accept-package-agreements
+
+--------------------------------------------------
+1. Comandos básicos do PowerShell
+-------------------------------------------------------------------------------------
+| Comando               | Descrição                                                   |
+| --------------------- | ----------------------------------------------------------- |
+| `Get-Help`            | Exibe ajuda sobre qualquer comando (`Get-Help Get-Process`) |
+| `Get-Command`         | Lista todos os comandos disponíveis                         |
+| `Get-Alias`           | Mostra os apelidos (atalhos) para comandos                  |
+| `Clear-Host` ou `cls` | Limpa a tela do PowerShell                                  |
+| `exit`                | Sai do PowerShell        
+Ex: Get-Help NomeDoComando -Full
+--------------------------------------------------
+
+2. Gerenciamento de arquivos e pastas
+--------------------------------------------------
+| Comando                 | Descrição               |
+| ----------------------- | ----------------------- |
+| `Get-ChildItem` ou `ls` | Lista arquivos e pastas |
+| `Set-Location` ou `cd`  | Muda o diretório atual  |
+| `New-Item`              | Cria arquivos ou pastas |
+| `Copy-Item` ou `cp`     | Copia arquivos/pastas   |
+| `Move-Item` ou `mv`     | Move arquivos/pastas    |
+| `Remove-Item` ou `rm`   | Deleta arquivos/pastas  |
+--------------------------------------------------
+
+3. Processos e serviços
+--------------------------------------------------
+| Comando         | Descrição                   |
+| --------------- | --------------------------- |
+| `Get-Process`   | Lista processos em execução |
+| `Stop-Process`  | Encerra um processo         |
+| `Start-Process` | Inicia um novo processo     |
+| `Get-Service`   | Lista serviços do sistema   |
+| `Start-Service` | Inicia um serviço           |
+| `Stop-Service`  | Para um serviço             |
+Exemplos: 
+Stop-Process -Name "notepad"
+Start-Service -Name "wuauserv"
+--------------------------------------------------
+
+4. Rede e internet
+-----------------------------------------------------------------------------
+| Comando                     | Descrição                                     |
+| --------------------------- | --------------------------------------------- |
+| `Test-Connection` ou `ping` | Testa conectividade (como ping)               |
+| `Resolve-DnsName`           | Faz resolução de DNS (semelhante ao nslookup) |
+| `Get-NetIPAddress`          | Mostra IPs da máquina                         |
+| `Get-NetAdapter`            | Lista adaptadores de rede                     |
+--------------------------------------------------
+
+5. Sistema e informações do computador
+---------------------------------------------------------------
+| Comando            | Descrição                                |
+| ------------------ | ---------------------------------------- |
+| `Get-ComputerInfo` | Mostra informações detalhadas do sistema |
+| `Get-WmiObject`    | Consulta informações via WMI             |
+| `Restart-Computer` | Reinicia o computador                    |
+| `Stop-Computer`    | Desliga o computador                     |
+| `Get-Date`         | Mostra a data e hora atual               |
+--------------------------------------------------
+
+6. Gerenciamento de usuários e permissões (Admin)
+--------------------------------------------------------------------------
+| Comando                | Descrição                                       |
+| ---------------------- | ----------------------------------------------- |
+| `net user`             | Lista e gerencia contas de usuário              |
+| `New-LocalUser`        | Cria novo usuário local                         |
+| `Add-LocalGroupMember` | Adiciona usuário a grupo (como Administradores) |
+--------------------------------------------------
+

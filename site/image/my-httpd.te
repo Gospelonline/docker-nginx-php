@@ -1,0 +1,28 @@
+
+module my-httpd 1.0;
+
+require {
+	type httpd_t;
+	type user_home_t;
+	type home_root_t;
+	type user_home_dir_t;
+	class dir write;
+	class file { getattr open read };
+}
+
+#============= httpd_t ==============
+
+#!!!! WARNING: 'home_root_t' is a base type.
+#!!!! The file '/var/www/html/TodimoTi/image/include.png' is mislabeled on your system.  
+#!!!! Fix with $ restorecon -R -v /var/www/html/TodimoTi/image/include.png
+allow httpd_t home_root_t:file getattr;
+
+#!!!! The file '/var/www/html/TodimoTi/logs' is mislabeled on your system.  
+#!!!! Fix with $ restorecon -R -v /var/www/html/TodimoTi/logs
+allow httpd_t user_home_dir_t:dir write;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t user_home_dir_t:file { getattr open read };
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t user_home_t:file { open read };

@@ -1,0 +1,154 @@
+:root {
+  --bg-color: #121212;
+  --text-color: #eee;
+  --sidebar-bg: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --hover-color: #333;
+}
+body.light {
+  --bg-color: #f5f5f5;
+  --text-color: #111;
+  --sidebar-bg: #fff;
+  --card-bg: #fff;
+  --hover-color: #ddd;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+}
+header {
+  width: 96%;
+  background: var(--sidebar-bg);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+header h1 { margin: 0; font-size: 20px; }
+.header-buttons { display: flex; gap: 10px; }
+button {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: none;
+  transition: 0.3s;
+}
+button:hover { background: var(--hover-color); }
+.main { display: flex; margin-top: 60px; }
+.sidebar {
+  width: 350px;
+  height: calc(100vh - 60px);
+  background: var(--sidebar-bg);
+  transition: width 0.3s;
+  overflow-x: hidden;
+  position: fixed;
+  top: 70px; left: 0;
+}
+.sidebar.collapsed { width: 70px; }
+.menu { list-style: none; padding: 0; margin: 10; }
+.menu li a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 20px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+.menu li a:hover { background: var(--hover-color); }
+.menu span.texto { transition: opacity 0.3s; }
+.sidebar.collapsed .menu span.texto { opacity: 0; }
+.content {
+  flex: 1;
+  margin-left: 350px;
+  padding: 20px;
+  transition: margin-left 0.3s;
+}
+.content.collapsed { margin-left: 70px; }
+.card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+@media (max-width: 760px) {
+  .sidebar { position: absolute; height: calc(100vh - 60px); z-index: 999; }
+  .content, .content.collapsed { margin-left: 0; }
+}
+
+/* --------------------------Esconde submenus por padrão------------------------------ */
+.submenu {
+  display: none;
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
+/* Estilo dos links do submenu */
+.submenu li a {
+  font-size: 14px;
+  padding: 8px 20px;
+  display: block;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.submenu li a:hover {
+  background: var(--hover-color);
+}
+
+/* Quando o item pai está ativo, mostra o submenu */
+.has-submenu.open > .submenu {
+  display: block;
+}
+/* --------------------------Logo do Login.php------------------------------ */
+.login-logo {
+    display: block;
+    margin: 0 auto 20px; /* centraliza e adiciona espaço abaixo */
+    width: 0 auto 90px;  /* ajuste o tamanho do logo */
+    height: 35px; /* ajuste conforme necessário */
+    border-radius: 8px; /* opcional, deixa cantos arredondados */
+}
+/* ---------------------Alinhamento de icone vertical----------------------- */
+.logout-link {
+  display: inline-flex;
+  align-items: center; /* controla o alinhamento vertical */
+  gap: 4px; /* espaço entre ícone e texto */
+  text-decoration: none;
+}
+
+.logout-link .texto {
+  color: #4a90e2;
+}
+
+/* Alinhamento customizável */
+.logout-link.vertical-top {
+  align-items: flex-start;
+}
+
+.logout-link.vertical-middle {
+  align-items: center;
+}
+
+.logout-link.vertical-bottom {
+  align-items: flex-end;
+}
+
+/* ---------------------corrigindo imagem com fundo branco para dark mode----------------------- 
+class="logo-ajustada" --->no html
+
+.logo-ajustada {
+    mix-blend-mode: multiply; 
+    /* opções: 'darken', 'luminosity', difference, screen, multiply, etc 
+}*/
+

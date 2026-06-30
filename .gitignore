@@ -1,0 +1,22 @@
+# Banco de dados
+mariadb/
+
+# Logs
+logs/
+*.log
+
+# Backups
+*.sql
+*.tar.gz
+backup/
+
+# Variáveis de ambiente
+.env
+
+# Arquivos temporários
+*.swp
+*.tmp
+
+# macOS / Windows
+.DS_Store
+Thumbs.db

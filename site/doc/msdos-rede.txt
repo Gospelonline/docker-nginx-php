@@ -1,0 +1,175 @@
+Varredura Ping para armazendar endereço MAC  (arp -a)
+
+"  for /l %r in (2,1,254) do ping 192.168.25.%r " 
+
+%r - "variavel de ambiente ([iniciando em] 1, [de x em x] 1, [até] 254) - contagem de máquina a máquina até o limite de 1000 máquinas". Altere de acordo com o número de máquinas que você possui no seu parque.
+do - "fazer"
+ping - "teste de conexão"
+192.168.0.%r - "ip da rede com a variável de contagem para os hosts"
+Digite “arp –a” e será listado a tabela de endereços mac com o ip correspondente.
+------------------------------------------------------------------------------------
+Corrigindo erro de conexão:
+
+ipconfig /release <Libera todas as conexões correspondentes>
+ipconfig /renew <Renova todos os adaptadores de rede>
+ipconfig /flushdns <Limpa a cache do DNS>
+ipconfig /registerdns <Renova o registro de cliente DNS>
+nbtstat -rr <Envia pacotes de liberação de nomes para WINS e inicia a atualização>
+netsh int ip reset all <Redefine o protocolo do windows TCP/IP caso corrompido>
+netsh winsock reset <Reseta todas configurações de REDE>
+------------------------------------------------------------------------------------
+Servidores DNS público:
+
+8.8.8.8 / 8.8.4.4 <Google>
+4.2.2.2 / 4.2.2.4 <d.resolvers.level3.net>
+------------------------------------------------------------------------------------
+visualizar computadores da rede local: net view
+------------------------------------------------------------------------------------
+ver usuarios logados na máquina: 
+PsLoggedon \\ip_computador (pacote Pstools)
+wmic /node:ip_computador computersystem get username
+------------------------------------------------------------------------------------
+NsLookUp: 
+Envia solicitações DNS para um servidor DNS por escolha.
+nslookup [domínio] [servidor dns]
+O comando NsLookUp permite enviar solicitações DNS para um servidor. Por padrão, se você não colocar o servidor DNS, o comando utilizará aquele que é utilizado pela sua interface de rede mas você pode forçar a utilização de um outro servidor.
+Por exemplo, para pedir ao servidor DNS 10.0.0.3 o endereço IP correspondente ao endereço www.ccm.net é: nslookup www.ccm.net 10.0.0.3
+------------------------------------------------------------------------------------
+NBTSTAT: 
+Atualização do cache do arquivo Lmhosts. Exibe as estatísticas do protocolo e as conexões TCP/IP atuais utilizando NBT (NetBIOS sobre TCP/IP).
+NBTSTAT [-a Nome Distante] [-A endereço IP] [-c] [-n] [-r] [-R] [-s] [S] [intervalo]
+
+-a (estado da placa) lista da tabela de nomes da máquina distante (nome conhecido)
+-A (estado da placa) lista da tabela de nomes da máquina distante (endereço IP).
+-c (cache) lista o cache de nomes distantes e tidos como os endereços IP.
+-n (nomes) lista os nomes NetBIOS locais.
+-r (resolvidos) lista os nomes resolvidos pela difusão e via Wins.
+-R (Carga) esvaziamento e carregamento da tabela do cache de nomes distantes.
+-S (Sessões) lista a tabela de sessões com os endereços destino IP.
+-s (sessões) lista a tabela de sessões convertendo os endereços de destino IP em nomes de hóspedes via o arquivo hóspedes.
+Exemplo: nbtstat -A @IP
+------------------------------------------------------------------------------------
+NETSTAT: 
+Exibe o estado da pilha TCP/IP na sua máquina local.
+NETSTAT [-a] [-e] [-n] [-s] [-p proto] [-r] [intervalo]
+-a exibe todas as conexão e portas de escutas (As conexões do lado do servidor são normalmente inibidas).
+-e exibe as estatísticas Ethernet e pode ser combinada com a opção -s.
+-n exibe os endereços e os números de portas sob a forma numérica.
+-p proto exibe as conexões para o protocolo especificado pelo protocolo. O protocolo pode ser utilizado com a opção -s para exibir as estatísticas por protocolo e pode ser TCP, UDP, ou IP.
+-r exibe o conteúdo da tabela do roteador.
+-s exibe as estatísticas por protocolo. Por padrão, as estatísticas em TCP, UDP e IP são visualizadas; a opção -p pode ser utilizada para especificar em subconjunto do padrão.
+intervalo: exibe novamente as estatísticas selecionadas, com uma pausa de intervalo de segundos entre cada exibição. Pressione Ctrl + C para parar a exibição das estatísticas.
+-abnov: exibe os processos que utilizam a conexão internet (Endereço IP, porta, endereço distante e o PID do processo que utiliza a conexão, bem como seu nome). 
+------------------------------------------------------------------------------------
+ARP: 
+Resolução dos endereços IP em endereços MAC. Exibe e modifica as tabelas de traduções dos endereços IP em endereços físicos utilizados pelo protocolo de resolução de endereços ARP.
+ARP -s adr_inet adr_eth [adr_if] 
+ARP -d adr_inet [adr_if] 
+ARP -a [adr_inet] [-N adr_if] 
+-a exibe as entradas ARP interrogando o protocolo de dados ativos. Se adr_inet é especificado, somente os endereços de IP e físico do computador serão exibidos. Quando mais de uma interface de rede utilizar ARP, as entradas de cada tabela ARP são exibidas.
+-g Idêntica a -a.
+adr_inet precisa um endereço internet.
+-N adr_if mostra as entradas ARP para o acesso à interface de rede especificada por adr_if.
+-d apaga o hóspede específico por adr_inet.
+-s acrescenta um hóspede e associa o endereço Internet adr_inet com o endereço físico adr-eth. O endereço físico é dado sob forma de 6 octetos hexadecimais separados por hifens. A entrada é permanente.
+adr_eth especifica um endereço físico.
+adr_if definida, ela especifica o endereço Internet da interface cuja tabela de tradução dos endereços deveria estar modificada. Não definida, a primeira interface aplicável será utilizada. 
+------------------------------------------------------------------------------------
+ROUTE: 
+Exibe ou modifica a tabela do roteador.
+ROUTE [-f] [comando [destinação] [MASK máscara da rede] [gateway]
+-f apaga as tabelas do roteador de todas as entradas de gateways. Utilizado conjuntamente com um dos comandos, as tabelas são apagadas antes da execução do comando.
+-p mostra a entrada na tabela depois do reboot da máquina.
+Comando: especifica um dos quatro comandos: DELETE (Suprime) que apaga um itinerário, PRINT (Imprime) que exibe um itinerário, ADD (Adiciona) que acrescenta um itinerário, CHANGE (Altera) que modifica um itinerário existente.
+Destino: especifica um hóspede.
+MASK: se a palavra chave MASK estiver presente, o parâmetro seguinte é interpretado como o parâmetro máscara da rede.
+Máscara: fornecida, ela especifica o valor da máscara da sub-rede para associar esta entrada de itinerário. Não especificada, ela assume o valor padrão 255.255.255.255.
+Gateway: especifica a Gateway.
+METRIC: especifica o custo métrico para o destino. 
+------------------------------------------------------------------------------------
+Comando para visualizar as configurações:
+netsh interface ip show config
+------------------------------------------------------------------------------------
+Setando ip da placa de rede em DHCP:
+
+netsh interface ip set address name=”Conexão local” dhcp
+netsh interface ip set dnsservers name=”Conexão local” dhcp
+------------------------------------------------------------------------------------
+Configurando ip fixo na placa de Rede manualmente pelo netsh:
+
+//mostrar a interfaces:
+netsh interface ip show interfaces
+
+//Windows 10 mudar ip: 
+netsh interface ipv4 set address name="Ethernet" static 192.168.7.11
+
+//Definir um ip estático para a interface com o id 11
+netsh interface ip set address name=Ethernet static 192.168.1.2 255.255.255.0 192.168.1.1
+
+//Definir um dns primario
+netsh interface ip set dns Ethernet static 192.168.200.10 
+
+//Definir um dns 
+netsh interface ip add dns Ethernet 192.168.200.10 index=1 no
+
+//Deletar um dns
+netsh interface ip delete dns Ethernet 192.168.100.10 
+
+//Definir atribuiçao de ip automática
+netsh interface ip set address name=Ethernet dhcp
+
+//Definir busca de endereços dns automática
+netsh interface ip set dns Ethernet dhcp
+----------------------------------------------------
+//Windows 7
+
+//mostrar a interfaces:
+netsh interface ip show interfaces
+
+//incluir dns
+netsh int ip add dns "8" 192.168.200.10 index=1 no
+//apagar dns
+netsh int ip delete dns "10" 192.168.100.10 
+----------------------------------------------------
+//Windows Vista
+
+//apaga todos dns e inclui 1
+netsh interface ip set dnsservers name="10" static 192.168.200.10
+netsh interface ip set dns name="10" static 192.168.200.10 
+ 
+//inclui dns conforme o indice
+netsh interface ip add dnsserver "10" 192.168.200.10 index=1
+
+//apaga dns
+netsh interface ip delete dnsserver "10" 192.168.100.10
+----------------------------------------------------
+C:> netsh int ip set address name="Conexão Local" source=static 192.168.1.200 255.255.255.0 192.168.1.1 1
+C:> netsh int ip set dns "Conexão Local" static 8.8.8.8
+C:> netsh int ip set dns "8" static 192.168.200.10 index=1 Onde:
+IP: 192.168.1.200
+Máscará: 255.255.255.0
+Gateway: 192.168.1.1
+DNS primário: 8.8.8.8
+DNS secundário: 8.8.4.4
+PS: Não esquecer do número 1 no final para indicar o gateway, isso marca o flag no Windows.
+Atualizando
+C:> ipconfig /release
+C:> ipconfig /renew
+
+Para facilitar, segue o script em batch (network-address.bat):
+
+set /P ip= "Endereço IP: "
+set /P mask= "Máscara: "
+set /P gw= "Gateway: "
+set /P dns1= "DNS 1: "
+set /P dns2=" DNS 2: "
+netsh int ip set address name="Conexão Local" source=static %ip% %mask% %gw% 1
+netsh int ip set dns "Conexão Local" static %dns1%
+netsh int ip set dns "Conexão Local" static %dns2% index=2
+echo "IP: " %ip%
+echo "Mask: " %mask%
+echo "Gw: " %gw%
+echo "DNS1: " %dns1%
+echo "DNS2: " %dns2% 
+------------------------------------------------------------------------------------
+

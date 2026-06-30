@@ -1,0 +1,10 @@
+Refazendo o arquivos de inicialização do Windows 10:
+
+CHKDSK /R /F X: [Enter]
+Bootrec /Scanos [Enter]
+Bootrec /Rebuildbcd [Enter]
+Bootrec /Fixmbr [Enter]
+Bootrec /Fixboot [Enter]
+-----------------------------------------------------------------
+Reparação do arquivo boot: fixboot
+Reparação do arquivo mbr: fixmbr

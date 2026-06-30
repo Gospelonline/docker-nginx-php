@@ -1,0 +1,40 @@
+<?php
+
+			include_once("conexao.php");
+			//INICIO A SESSÃO
+			session_start();
+			$login=$_POST["login"];
+			$senha2=$_POST["senha"];
+			$senha=md5("$senha2");
+			$sql = "SELECT * FROM usuarios WHERE login LIKE '$login' and senha LIKE '$senha' limit 1";	
+			$result = $con->query($sql);
+
+			if ($result->num_rows > 0) {
+
+			$_SESSION["logado"] = TRUE;
+			$_SESSION["user"] = $_POST["login"];
+			$nome = $_SESSION["user"];
+
+			session_start();
+
+			//Janela de bem vindo
+			echo "<script type='text/javascript'>
+			var nome_usuario = '$nome';
+			//alert('Bem-vindo '+nome_usuario+'!');
+			window.location='index.php';
+			exit;
+			</script>";
+
+			//Cria arquivo de log na pasta var/www/html/TodimoTi/logs
+			include "logger.php";
+			Logger("$nome");
+			}
+			else {
+
+			//Caso o login dÃª errado, o usuÃ¡rio volta para o login
+			echo "<script type='text/javascript'>
+			alert('Usuario ou Senha incorreta!');
+			window.location='login.php';
+			</script>";
+			}
+?>

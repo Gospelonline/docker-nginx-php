@@ -1,0 +1,130 @@
+Modo D'us, criar uma pasta com nome: GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}
+-----------------------------------------------------------------------------------------
+Abrir configurações avançadas do sistema:
+C:\Windows\System32\SystemPropertiesAdvanced.exe 
+-----------------------------------------------------------------------------------------
+Ativando Windows 7/10 online: slmgr /ato
+Trocando a chave de ativação: slmgr /ipk "outra_chave"
+
+Slmgr /rearm     	       // Utilizamos para limpar resquícios de ativações anteriores.
+Net stop sppsvc     	       // Paramos o serviço responsável pela validação.
+slmgr -ipk "Informe a chave"   // Inserimos a chave no sistema
+slmgr /ato        	       // Forçamos a ativação
+Net start sppsvc  	       // Reiniciamos o serviço
+-----------------------------------------------------------------------------------------
+Tela ativação Online: slui 3
+Tela ativação por Telefone: slui 4
+Janela para verificar se está ativado: slmgr /xpr
+-----------------------------------------------------------------------------------------
+Ativando conta administrador: net user administrador /active:yes
+-----------------------------------------------------------------------------------------
+Bloqueando sessão de usuário: rundll32.exe user32.dll,LockWorkStation
+-----------------------------------------------------------------------------------------
+Alterando Fuso: tzutil /s "Central Brazilian Standard Time" (exemplo de Cuiabá)
+Lista os Fusos disponíveis: tzutil /l
+-----------------------------------------------------------------------------------------
+Parar Serviços de Atualização do Windows:
+net stop UsoSvc (Update Orchstrator)
+net stop wuauserv (Windows Update)
+-----------------------------------------------------------------------------------------
+Apagando diretórios: rd (remove apenas pastas vazias)
+Apagando arquivos: 
+del | erase /f /s /q (/f - força apagar arq. leitura| /s - apaga conteúdo da pasta inteira | /q - apaga sem perguntar)
+deltree /y *.*
+-----------------------------------------------------------------------------------------
+Limpeza de tabela de cache dns remoto: 
+nbtstat -R 
+nbtstat -RR
+-----------------------------------------------------------------------------------------
+Limpeza cache dns local: 
+ipconfig /flushdns 
+ipconfig /registerdns
+
+Pode também verificar se tem algum registro no arquivo de Hosts.
+Este arquivo é na máquina local onde está testando o comando PING.
+Pois se tudo tiver bem com o Servidor DNS, pode ser que no arquivo Host possa ter algum registro que esteja a apontar para o IP errado.
+
+Para encontrar o arquivo hosts, verifique dentro da pasta do SYSTEM32\DRIVERS\ETC, vc tem um arquivo chamado hosts. Ele pode ser alterado com o NOTEPAD.
+-----------------------------------------------------------------------------------------
+mostrando arquivos ocultos: attrib -s -h
+-----------------------------------------------------------------------------------------
+Visualizando processos: tasklist
+Finalizando processo: taskill nº_identifi
+-----------------------------------------------------------------------------------------
+Visualizando compartilhamentos: 
+net share, net file, net session
+WMIC SHARE GET CAPTION,NAME,PATH
+-----------------------------------------------------------------------------------------
+Descobrindo a vesão do Windows 32 ou 64 bits: wmic OS get OSArchitecture
+ID Produto (Windows): wmic OS get serialnumber
+Descobrindo serial e versão do Windows: slmgr 
+-----------------------------------------------------------------------------------------
+Informações dos sistema (Hardware/Software): systeminfo / msinfo32 / dxdiag
+
+capacidade máxima de memória e nº de slots disponíveis: 
+powershell "('{0:N2} GB' -f ((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB))"
+
+wmic MemoryChip get BankLabel, DeviceLocator, Capacity
+wmic memphysical get MaxCapacity, MemoryDevices
+-----------------------------------------------------------------------------------------
+Número de série PC: wmic bios get serialnumber 
+Número de série do Windows: wmic path softwareLicensingService get OA3xOriginalProductKey
+-----------------------------------------------------------------------------------------
+Versão do Windows: winver, ver
+-----------------------------------------------------------------------------------------
+Tamanho do HD (diskdrive): wmic diskdrive get size
+Tipo do HD: powershell "Get-PhysicalDisk | Select-Object MediaType, FriendlyName, Size"
+-----------------------------------------------------------------------------------------
+Desativando Firewall:
+netsh firewall set opmode disable
+netsh advfirewall set currentprofile state off
+-----------------------------------------------------------------------------------------
+Ativando Firewall:
+netsh firewall set opmode enable
+netsh advfirewall set currentprofile state on
+-----------------------------------------------------------------------------------------
+Descobrindo usuário logado:
+wmic /node:"nomedocomputador" computersystem get username
+
+wmic computersystem get username
+control sysdm.cpl
+-----------------------------------------------------------------------------------------
+Visualizar programas instalados e desinstalar:
+
+Exemplo: psexec \\lndcadastro2 cmd 
+		wmic product get name,vendor,version
+		wmic product where name="Symantec Endpoint Protection" call uninstall
+
+1.No cmd e digite "wmic" para entrar no Windows Management Instrumentation.
+2.Logo após digite : "product get name,vendor,version" para pegar a lista dos progamas instalados no sistema.
+3.Logo após digite : product where name="nome_programa_a_desinstalar" call uninstall.
+4.Aguarde e irá uma pedir confirmação da operação. Tecle " Y " e dê enter. Após o término o progama foi desinstalado.
+-----------------------------------------------------------------------------------------
+Instalação silenciosa Java: start /w java.exe /s
+-----------------------------------------------------------------------------------------
+Central de Rede e Compartilhamentos	control /name Microsoft.networkandSharingcenter
+Ferramenta de Administração             control admintools
+Adicionar Impressora			control printers
+Adicionar Novo Hardware                 control sysdm.cpl add new hardware
+Adicionar/Remover Programas             control appwiz.cpl
+Propriedades de Data/Hora               control timedate.cpl
+Propriedades de Vídeo                   control desk.cpl
+FindFast                      	        control findfast.cpl
+Pasta Fontes                  	        control fonts
+Propriedades da Internet                control inetcpl.cpl
+Propriedades do Joystick                control joy.cpl
+Propriedades do Teclado                 control main.cpl keyboard
+Propriedades do Mouse                   control main.cpl
+Propriedades de Multimídia              control mmsys.cpl
+Propriedades da Rede                    control netcpl.cpl
+
+No Windows NT 4.0, a ferramenta Propriedades da Rede é Ncpa.cpl, e não Netcpl.cpl
+
+Gerenciamento de Energia (Win95)  	control main.cpl power
+Gerenciamento de Energia (Win98) 	control powercfg.cpl
+Pasta Impressoras      	       		control printers
+Configurações Regionais                 control intl.cpl
+Scanners e Câmeras           	        control sticpl.cpl
+Propriedades de Som               	control mmsys.cpl sounds
+Propriedades do Sistema        
+-----------------------------------------------------------------------------------------

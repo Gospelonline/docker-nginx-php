@@ -1,0 +1,11 @@
+
+module my-who 1.0;
+
+require {
+	type zabbix_agent_t;
+	type kernel_t;
+	class unix_stream_socket connectto;
+}
+
+#============= zabbix_agent_t ==============
+allow zabbix_agent_t kernel_t:unix_stream_socket connectto;
