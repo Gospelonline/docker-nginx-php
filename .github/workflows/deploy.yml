@@ -1,4 +1,4 @@
-name: Meu Primeiro Workflow
+name: Deploy
 
 on:
   push:
@@ -6,18 +6,20 @@ on:
       - main
 
 jobs:
-  teste:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Listar arquivos
-        run: ls -la
-
-      - name: Mostrar data
-        run: date
-
-      - name: Mostrar versão do Docker
-        run: docker --version
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/administrador/docker-nginx-php
+            git pull
+            docker compose up -d
