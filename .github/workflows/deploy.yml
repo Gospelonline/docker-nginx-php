@@ -1,4 +1,4 @@
-name: Deploy
+name: Variáveis GitHub
 
 on:
   push:
@@ -6,20 +6,28 @@ on:
       - main
 
 jobs:
-  deploy:
+  laboratorio:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    env:
+      APP_NAME: docker-nginx-php
+      AMBIENTE: desenvolvimento
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /home/administrador/docker-nginx-php
-            git pull
-            docker compose up -d
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Variáveis criadas por nós
+        run: |
+          echo "Aplicação: $APP_NAME"
+          echo "Ambiente: $AMBIENTE"
+
+      - name: Informações do GitHub
+        run: |
+          echo "Usuário: ${{ github.actor }}"
+          echo "Repositório: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+
+      - name: Data
+        run: date
