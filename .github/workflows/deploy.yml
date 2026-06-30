@@ -1,4 +1,4 @@
-name: Variáveis GitHub
+name: Docker Build
 
 on:
   push:
@@ -6,28 +6,22 @@ on:
       - main
 
 jobs:
-  laboratorio:
+  build:
     runs-on: ubuntu-latest
-
-    env:
-      APP_NAME: docker-nginx-php
-      AMBIENTE: desenvolvimento
 
     steps:
 
-      - uses: actions/checkout@v4
+      - name: Baixar projeto
+        uses: actions/checkout@v4
 
-      - name: Variáveis criadas por nós
-        run: |
-          echo "Aplicação: $APP_NAME"
-          echo "Ambiente: $AMBIENTE"
+      - name: Mostrar Docker
+        run: docker --version
 
-      - name: Informações do GitHub
-        run: |
-          echo "Usuário: ${{ github.actor }}"
-          echo "Repositório: ${{ github.repository }}"
-          echo "Branch: ${{ github.ref_name }}"
-          echo "Commit: ${{ github.sha }}"
+      - name: Mostrar Docker Compose
+        run: docker compose version
 
-      - name: Data
-        run: date
+      - name: Validar docker-compose.yml
+        run: docker compose config
+
+      - name: Construir containers
+        run: docker compose build
